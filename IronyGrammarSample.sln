@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronyGrammarSample", "IronyGrammarSample\IronyGrammarSample.csproj", "{BB81BD60-091C-4026-AF6F-A613397209EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB81BD60-091C-4026-AF6F-A613397209EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB81BD60-091C-4026-AF6F-A613397209EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB81BD60-091C-4026-AF6F-A613397209EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB81BD60-091C-4026-AF6F-A613397209EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7CB6909-D769-4AD9-B028-FC5322DF95B0}
+	EndGlobalSection
+EndGlobal
