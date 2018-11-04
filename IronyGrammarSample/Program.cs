@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq; 
 using Irony.Parsing;
 
@@ -10,24 +11,27 @@ namespace IronyGrammarSample
         {
             var expressionGrammar = new MyLanguageGrammar();
             var parser = new Parser(expressionGrammar);
+//#include ""filename.txt""
          
-            ParseQuery(@"
-[Option1]
-woof: 123
-bubu: 3211 
+            ParseQuery(File.ReadAllText("sample.iss"), parser);
+//             ParseQuery(@"
+// [Option1]
+// woof: 123
+// bubu: 3211 
+// 
+// [Option2]
+// test: 321
+// ", parser);
+// 
+//             ParseQuery(@"
+// woof: 123
+// bubu: 3211 
+// 
+// ", parser);
 
-[Option2]
-test: 321
-", parser);
 
-            ParseQuery(@"
-woof: 123
-bubu: 3211 
-
-", parser);
-
-
-            Console.WriteLine("Done");
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
         }
 
 
@@ -48,42 +52,6 @@ bubu: 3211
             } 
             Console.WriteLine(parseResult.ToXml());
             return parseResult;
-        }
-    }
-
-    internal class MyLanguageGrammar : Grammar
-    {
-        public MyLanguageGrammar()
-        {
-            var optionIndentifier = new IdentifierTerminal("OptionIdentifier"); 
-
-            var optionTerm = new NonTerminal("Option");
-            optionTerm.Rule = ToTerm("[") + optionIndentifier + "]";
-            
-            var numericFildValue = new NumberLiteral("NumericFieldValue");
-            var fieldValue = new NonTerminal("fieldValue");
-            fieldValue.Rule = numericFildValue;
-            MarkTransient(fieldValue);
-
-
-            var field = new NonTerminal("Field");
-            var fieldName = new IdentifierTerminal("fieldName");
-
-            field.Rule = fieldName + ":" + fieldValue;
-
-            var blockFields = new NonTerminal("BlockFields");        
-            MakePlusRule(blockFields, field);
-
-            var optionBlock = new NonTerminal("Option Block");
-
-            optionBlock.Rule = optionTerm + blockFields;
-
-            var blockList = new NonTerminal("BlockList");
-            MakePlusRule(blockList, optionBlock);
-
-            var configRoot = new NonTerminal("ConfigRoot");
-            configRoot.Rule = blockList | blockFields;
-            this.Root = configRoot;
         }
     }
 }
