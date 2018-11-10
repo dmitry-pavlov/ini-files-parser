@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Files.Section.Lines.iss">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sample2.iss">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

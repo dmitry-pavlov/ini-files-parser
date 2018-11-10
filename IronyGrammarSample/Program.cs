@@ -11,45 +11,42 @@ namespace IronyGrammarSample
         {
             var expressionGrammar = new MyLanguageGrammar();
             var parser = new Parser(expressionGrammar);
-//#include ""filename.txt""
-         
-            ParseQuery(File.ReadAllText("sample.iss"), parser);
-//             ParseQuery(@"
-// [Option1]
-// woof: 123
-// bubu: 3211 
-// 
-// [Option2]
-// test: 321
-// ", parser);
-// 
-//             ParseQuery(@"
-// woof: 123
-// bubu: 3211 
-// 
-// ", parser);
 
+            var text = File.ReadAllText("Files.Section.Lines.iss");
+            var tree = ParseQuery(text, parser);
 
-            Console.WriteLine("Press any key to exit...");
+            var newLine = Environment.NewLine;
+            Console.WriteLine($"{newLine}{newLine}Press any key to exit...");
             Console.ReadKey();
         }
 
 
-        private static ParseTree ParseQuery(string query, Parser exparser)
+        private static ParseTree ParseQuery(string query, Parser parser)
         {
-            var parseResult = exparser.Parse(query);
+            parser.Context.TracingEnabled = true;
 
- 
+            if (parser.Language.Errors.Any())
+            {
+                foreach (var error in parser.Language.Errors.Select(x => x.Message))
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            var parseResult = parser.Parse(query);
+
             Console.WriteLine(query);
 
             if (parseResult.HasErrors())
             {
-                foreach (var s in parseResult.ParserMessages.Select(x => x.Message))
+                foreach (var error in parseResult.ParserMessages.Select(x => x.Message))
                 {
-                    Console.Write(s);
+                    Console.Write(error);
                 }
+
                 return null;
-            } 
+            }
+
             Console.WriteLine(parseResult.ToXml());
             return parseResult;
         }
