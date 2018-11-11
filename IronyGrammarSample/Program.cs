@@ -39,15 +39,14 @@ namespace IronyGrammarSample
 
             if (parseResult.HasErrors())
             {
-                foreach (var error in parseResult.ParserMessages.Select(x => x.Message))
+                foreach (var error in parseResult.ParserMessages)
                 {
-                    Console.Write(error);
+                    Console.Write($"{error.Location}: {error.Message}");
                 }
-
-                return null;
             }
 
             Console.WriteLine(parseResult.ToXml());
+
             return parseResult;
         }
     }

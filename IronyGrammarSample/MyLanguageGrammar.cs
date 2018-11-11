@@ -8,28 +8,45 @@ namespace IronyGrammarSample
     {
         public MyLanguageGrammar()
         {
+            var comment = new CommentTerminal("comment", ";", "\n", "\r");
+            NonGrammarTerminals.Add(comment);
+
             // Terminals
             var colon = ToTerm(":");
-            var semicolon = ToTerm(";");
-            var source = ToTerm("Source", "SourceParamName");
-            var value = new DsvLiteral("DSV", TypeCode.String, ";");
+            //var source = ToTerm("Source", "SourceParamName");
+            //var destDir = ToTerm("DestDir", "DestDirParamName");
+
+            //var value = new DsvLiteral("DSV", TypeCode.String, ";");
 
             //Non-terminals
-            var parameterName = new NonTerminal("Parameter Name");
-            var parameterValue = new NonTerminal("Parameter Value");
+            //var parameterName = new NonTerminal("Parameter Name");
+            //var parameterValue = new NonTerminal("Parameter Value");
             var parameter = new NonTerminal("Parameter");
             var line = new NonTerminal("Line");
             var lines = new NonTerminal("Lines");
             var script = new NonTerminal("Script");
 
+            var source = new NonTerminal("Source");
+            var destDir = new NonTerminal("DestDir");
+
+
             //Rules
-            parameterName.Rule = source;
-            parameterValue.Rule = value;
-            parameter.Rule = parameterName + colon + parameterValue;
-            line.Rule = MakeStarRule(line, semicolon, parameter);
-            lines.Rule = MakeStarRule(lines, NewLine, line);
+            // parameterName.Rule = source | destDir;
+            // parameterValue.Rule = value;
+            // parameter.Rule = parameterName + colon + parameterValue;
+
+            source.Rule = ToTerm("Source") + colon + new DsvLiteral("DSV", TypeCode.String, ";");
+            destDir.Rule = ToTerm("DestDir") + colon + new DsvLiteral("DSV", TypeCode.String, ";");
+
+            //parameterName.Rule = source | destDir;
+            //parameterValue.Rule = value;
+            parameter.Rule = source | destDir;
+
+            line.Rule = MakeStarRule(line, parameter) + NewLine;
+            lines.Rule = MakeStarRule(lines, line);
 
             script.Rule = lines;
+
 
             Root = script;
             this.LanguageFlags |= LanguageFlags.NewLineBeforeEOF;
