@@ -42,13 +42,14 @@ namespace IronyGrammarSample
             //parameterValue.Rule = value;
             parameter.Rule = source | destDir;
 
-            line.Rule = MakeStarRule(line, parameter) + NewLine;
+            line.Rule = (MakeStarRule(line, parameter) + NewLine );
             lines.Rule = MakeStarRule(lines, line);
 
             script.Rule = lines;
 
 
             Root = script;
+            this.MarkPunctuation(";");
             this.LanguageFlags |= LanguageFlags.NewLineBeforeEOF;
 
             //  var sectionTerm = new NonTerminal("Section");
